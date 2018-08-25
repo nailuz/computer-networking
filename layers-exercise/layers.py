@@ -7,17 +7,17 @@ class Layer(object):
         self.top_layer = top_layer
         self.bot_layer = bot_layer
     
-    def send(self, data):
+    def to_bot(self, data):
         if self.bot_layer:
-            print(str(self.name), 'i am sending to bottom...', data)
-            self.bot_layer.send(data)
+            print(str(self.name), 'i am to_bot to bottom...', data)
+            self.bot_layer.to_bot(data)
         else:
             print('BLOCKED. The layer', self.name, 'has not implement the bot layer')
 
-    def receive(self, data):
+    def to_top(self, data):
         if self.top_layer:
-            print(str(self.name), 'i am receiving to top...', data)
-            self.top_layer.receive(data)
+            print(str(self.name), 'i am to_top to top...', data)
+            self.top_layer.to_top(data)
         else:
             print('BLOCKED. The layer', self.name, 'has not implement the top layer')
 
@@ -50,5 +50,5 @@ layer_b2.bot_layer = layer_b3
 layer_b3.top_layer = layer_b2
 
 #To post something
-layer_a3.receive('test')
-layer_a1.send('test')
+layer_a3.to_top('test')
+layer_a1.to_bot('test')
