@@ -16,7 +16,7 @@ def binary(data):
     mask.append(aux)
     while len(mask) < 4:
         mask.append('00000000')
-    return ip, mask
+    return (ip, mask)
 
 def check_class(binary):
     value = int(binary[0], 2)
@@ -31,9 +31,34 @@ def check_class(binary):
     if value <= 255:
         return 'CLASS E'
 
+def check_network(ip, mask):
+    result = []
+    for i in range(len(ip)):
+        aux = ''
+        for j in range(len(ip[i])):
+            if int(ip[i][j]) or int(mask[i][j]):
+                if not int(mask[i][j]):
+                    aux = aux + '0'
+                else:
+                    aux = aux + ip[i][j]
+            else:
+                aux = aux + '0'
+        result.append(aux)
+                
+    return result
 
-ip = '10.168.0.1/16' 
+def to_string(array):
+    result = ''
+    for row in array:
+        result = result + str(int(row, 2)) + '.'
+    return print(result[:-1])
+
+ip = '192.168.0.1/24' 
 
 ip_binary, mask_binary = binary(ip)
 print(ip_binary, mask_binary)
+to_string(mask_binary)
+to_string(ip_binary)
 print(check_class(ip_binary))
+network = check_network(ip_binary, mask_binary)
+to_string(network)
